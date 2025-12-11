@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT uid, COUNT(*) AS session_count\nFROM session \nWHERE created_at >= '2025-10-22 00:00:00.000' AND status = 1\nGROUP BY uid\nORDER BY session_count DESC\nLIMIT 50000"
+  },
+  "result": "The results of executing sql SELECT uid, COUNT(*) AS session_count\nFROM session \nWHERE created_at >= '2025-10-22 00:00:00.000' AND status = 1\nGROUP BY uid\nORDER BY session_count DESC\nLIMIT 50000 is\nuid,session_count",
+  "cached_at": "2025-12-01T18:35:16.262584"
+}

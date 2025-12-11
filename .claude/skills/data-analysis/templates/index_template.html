@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析报告中心</title>
+
+    <style>
+        /* ========== Apple Design System ========== */
+        :root {
+            --apple-bg: #F5F5F7;
+            --apple-bg-secondary: #FFFFFF;
+            --apple-text-primary: #1D1D1F;
+            --apple-text-secondary: #86868B;
+            --apple-text-tertiary: #AEAEB2;
+            --apple-blue: #0071E3;
+            --apple-blue-hover: #0077ED;
+            --apple-divider: rgba(0, 0, 0, 0.08);
+
+            --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            --font-text: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 40px;
+            --space-6: 48px;
+            --space-8: 64px;
+
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-text);
+            background: var(--apple-bg);
+            color: var(--apple-text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: var(--space-8) var(--space-3);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .title-caption {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--apple-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: var(--space-1);
+        }
+
+        .title-hero {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            color: var(--apple-text-primary);
+        }
+
+        .title-subtitle {
+            font-size: 21px;
+            color: var(--apple-text-secondary);
+            margin-top: var(--space-2);
+        }
+
+        /* Report List */
+        .report-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .report-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--apple-bg-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--space-3) var(--space-4);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .report-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .report-info {
+            flex: 1;
+        }
+
+        .report-title {
+            font-family: var(--font-display);
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--apple-text-primary);
+            margin-bottom: 6px;
+        }
+
+        .report-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 14px;
+            color: var(--apple-text-tertiary);
+        }
+
+        .report-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .report-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--apple-text-tertiary);
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--apple-blue);
+        }
+
+        .action-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .arrow-icon {
+            color: var(--apple-blue);
+        }
+
+        .arrow-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: var(--apple-bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8) var(--space-4);
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--space-3);
+            color: var(--apple-text-tertiary);
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--apple-text-secondary);
+            margin-bottom: var(--space-1);
+        }
+
+        .empty-desc {
+            font-size: 15px;
+            color: var(--apple-text-tertiary);
+        }
+
+        .empty-desc code {
+            display: inline-block;
+            background: var(--apple-bg);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: var(--space-8);
+            text-align: center;
+            color: var(--apple-text-tertiary);
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--apple-text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: var(--apple-blue);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Icons (inline SVG) */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.125em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <p class="title-caption">Data Insight Agent</p>
+            <h1 class="title-hero">数据分析报告</h1>
+            <p class="title-subtitle">所有分析报告集中展示</p>
+        </header>
+
+        <!-- Report List -->
+        <div id="reportList" class="report-list">
+            <!-- 报告卡片由 JS 动态生成 -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 17h6M9 13h6M9 9h6M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+            <h3 class="empty-title">暂无分析报告</h3>
+            <p class="empty-desc">
+                使用 <code>/analyze</code> 命令开始你的第一次数据分析
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>由 Data Insight Agent 自动生成。made by @郭美青聊AI</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/anthropics/claude-code" target="_blank">Powered by Claude Code</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 报告数据（由生成脚本替换）
+        const reports = /*__REPORTS_DATA__*/[]/*__END_DATA__*/;
+
+        function formatDate(dateStr) {
+            if (!dateStr || dateStr.length < 15) return dateStr;
+            const year = dateStr.substring(0, 4);
+            const month = dateStr.substring(4, 6);
+            const day = dateStr.substring(6, 8);
+            const hour = dateStr.substring(9, 11);
+            const minute = dateStr.substring(11, 13);
+            return `${year}-${month}-${day} ${hour}:${minute}`;
+        }
+
+        function formatTopic(topic) {
+            return topic.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function renderReports() {
+            const listEl = document.getElementById('reportList');
+            const emptyEl = document.getElementById('emptyState');
+
+            if (reports.length === 0) {
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+
+            listEl.innerHTML = reports.map(report => `
+                <a href="${report.folder}/report.html" class="report-card">
+                    <div class="report-info">
+                        <h3 class="report-title">${formatTopic(report.topic)}</h3>
+                        <div class="report-meta">
+                            <span class="report-meta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                ${formatDate(report.timestamp)}
+                            </span>
+                            <span class="report-meta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                                </svg>
+                                ${report.folder}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <span class="action-btn" title="查看 Markdown" onclick="event.preventDefault(); event.stopPropagation(); window.open('${report.folder}/report.md', '_blank');">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 3h18v18H3V3zm16.5 15V6h-3v6.5l-2.5-3-2.5 3V6h-3v12h3v-4l2.5 3 2.5-3v4h3z"/>
+                            </svg>
+                        </span>
+                        <span class="arrow-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderReports);
+    </script>
+</body>
+</html>

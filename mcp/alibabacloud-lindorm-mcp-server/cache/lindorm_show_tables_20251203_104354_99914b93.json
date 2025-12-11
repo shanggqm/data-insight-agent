@@ -1,0 +1,6 @@
+{
+  "tool_name": "lindorm_show_tables",
+  "params": {},
+  "result": "Error executing SHOW TABLES: 2055: Lost connection to MySQL server at 'ld-2ze229ipurz94948b-proxy-lindorm.lindorm.rds.aliyuncs.com:33060', system error: 32 Broken pipe",
+  "cached_at": "2025-12-03T10:43:54.888947"
+}

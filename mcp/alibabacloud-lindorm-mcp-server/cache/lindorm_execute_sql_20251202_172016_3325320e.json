@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT * FROM message WHERE sid='S733354873552901' AND roleid=0 ORDER BY created_at ASC"
+  },
+  "result": "The results of executing sql SELECT * FROM message WHERE sid='S733354873552901' AND roleid=0 ORDER BY created_at ASC is\nError executing query: 2055: Lost connection to MySQL server at 'ld-2ze229ipurz94948b-proxy-lindorm.lindorm.rds.aliyuncs.com:33060', system error: 32 Broken pipe",
+  "cached_at": "2025-12-02T17:20:16.395451"
+}

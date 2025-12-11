@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_describe_table",
+  "params": {
+    "table_name": "message"
+  },
+  "result": "Error executing DESCRIBE TABLE message: 2055: Lost connection to MySQL server at 'ld-2ze229ipurz94948b-proxy-lindorm.lindorm.rds.aliyuncs.com:33060', system error: 32 Broken pipe",
+  "cached_at": "2025-12-02T11:02:25.948644"
+}

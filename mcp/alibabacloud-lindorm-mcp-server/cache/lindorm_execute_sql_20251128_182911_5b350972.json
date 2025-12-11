@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT * FROM message WHERE uid = '288401' AND roleid = '0' LIMIT 1"
+  },
+  "result": "The results of executing sql SELECT * FROM message WHERE uid = '288401' AND roleid = '0' LIMIT 1 is\nid,fe_msg_id,pid,uid,sid,roleid,step,safety_category,finish_reason,status,audit_status,risk_type,stream_idx,created_at,updated_at,session_no\nM729833513000965,M-127dfcfc-6de6-42ba-bff6-d7125ce126d9,M729833264304133,288401,S729833264205829,0,大三阳和小三阳的治疗目标是什么？,,,0,0,,0,2025-10-13 01:20:11.804,2025-10-13 01:20:12.010,None",
+  "cached_at": "2025-11-28T18:29:11.272627"
+}

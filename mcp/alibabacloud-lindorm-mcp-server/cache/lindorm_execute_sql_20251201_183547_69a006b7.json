@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT COUNT(*) AS total FROM session"
+  },
+  "result": "The results of executing sql SELECT COUNT(*) AS total FROM session is\ntotal\n5958832",
+  "cached_at": "2025-12-01T18:35:47.857123"
+}

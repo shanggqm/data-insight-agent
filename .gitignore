@@ -1,0 +1,33 @@
+# 依赖
+node_modules/
+.venv/
+__pycache__/
+
+# 构建输出
+build/
+dist/
+
+# 分析输出
+analysis-output/
+
+# 系统文件
+.DS_Store
+*.log
+Thumbs.db
+
+# 敏感配置（必须忽略）
+.claude/settings.local.json
+.mcp.json
+.env
+.env.local
+*.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.temp

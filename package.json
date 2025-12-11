@@ -1,0 +1,37 @@
+{
+  "name": "data-insight-agent",
+  "version": "1.0.0",
+  "description": "Data Insight Agent - AI-powered data analysis with Claude Code",
+  "type": "module",
+  "author": {
+    "name": "Meiqing Guo",
+    "url": "https://github.com/shanggqm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanggqm/data-insight-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shanggqm/data-insight-agent/issues"
+  },
+  "homepage": "https://github.com/shanggqm/data-insight-agent#readme",
+  "funding": {
+    "type": "wechat",
+    "url": "https://github.com/shanggqm/data-insight-agent#support"
+  },
+  "scripts": {
+    "serve": "npx serve analysis-output -p 3000",
+    "serve:open": "npx serve analysis-output -p 3000 & sleep 1 && open http://localhost:3000"
+  },
+  "keywords": [
+    "claude-code",
+    "data-analysis",
+    "mcp",
+    "ai",
+    "anthropic",
+    "claude",
+    "data-visualization",
+    "business-intelligence"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT /*+ _l_allow_filtering_ */ SUBSTR(created_at, 1, 7) as created_month, type, COUNT(*) AS cnt FROM attachment WHERE created_at < '2025-09-28 00:00:00.000' GROUP BY SUBSTR(created_at, 1, 7), type"
+  },
+  "result": "The results of executing sql SELECT /*+ _l_allow_filtering_ */ SUBSTR(created_at, 1, 7) as created_month, type, COUNT(*) AS cnt FROM attachment WHERE created_at < '2025-09-28 00:00:00.000' GROUP BY SUBSTR(created_at, 1, 7), type is\nError executing query: 1317 (70100): Query execution was interrupted; The estimated memory value of 9285145 used by the query exceeds the maximum limit of 8388608.",
+  "cached_at": "2025-12-01T19:28:48.055298"
+}

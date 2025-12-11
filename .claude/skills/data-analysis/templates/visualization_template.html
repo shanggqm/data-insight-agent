@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{报告标题} - 数据分析报告</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.min.css">
+
+    <!-- SF Pro 字体 (系统回退) -->
+    <style>
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display'), local('.SF NS Display'), local('Helvetica Neue');
+        }
+        @font-face {
+            font-family: 'SF Pro Text';
+            src: local('SF Pro Text'), local('.SF NS Text'), local('Helvetica Neue');
+        }
+    </style>
+
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <style>
+        /* ========== Apple Design System ========== */
+        :root {
+            /* 颜色系统 */
+            --apple-bg: #F5F5F7;
+            --apple-bg-secondary: #FFFFFF;
+            --apple-text-primary: #1D1D1F;
+            --apple-text-secondary: #86868B;
+            --apple-text-tertiary: #AEAEB2;
+            --apple-blue: #0071E3;
+            --apple-blue-hover: #0077ED;
+            --apple-divider: rgba(0, 0, 0, 0.08);
+
+            /* 字体系统 */
+            --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            --font-text: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+            /* 间距系统 (8px base) */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 40px;
+            --space-6: 48px;
+            --space-8: 64px;
+            --space-10: 80px;
+
+            /* 圆角 - 连续曲率 (Squircle approximation) */
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --radius-xl: 40px;
+        }
+
+        /* Reveal.js 主题覆盖 */
+        .reveal {
+            font-family: var(--font-text);
+            font-size: 18px;
+            color: var(--apple-text-primary);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal .slides section {
+            padding: var(--space-8) var(--space-10);
+            background: var(--apple-bg);
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 禁用所有 fragment 动画 - 内容直接显示 */
+        .reveal .slides section .fragment {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+
+        /* 进度条 */
+        .reveal .progress {
+            color: var(--apple-blue);
+            height: 3px;
+        }
+
+        /* 控制按钮 */
+        .reveal .controls {
+            color: var(--apple-text-tertiary);
+        }
+
+        .reveal .controls button:hover {
+            color: var(--apple-blue);
+        }
+
+        /* 幻灯片编号 */
+        .reveal .slide-number {
+            color: var(--apple-text-tertiary);
+            background: transparent;
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ========== 排版系统 ========== */
+
+        /* 超大标题 - 封面用 */
+        .title-hero {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            color: var(--apple-text-primary);
+            margin: 0;
+        }
+
+        /* 页面标题 */
+        .title-page {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            color: var(--apple-text-primary);
+            margin: 0 0 var(--space-6) 0;
+        }
+
+        /* 副标题 */
+        .title-section {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--apple-text-primary);
+            margin: 0 0 var(--space-3) 0;
+        }
+
+        /* 正文大字 */
+        .text-large {
+            font-family: var(--font-text);
+            font-size: 21px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--apple-text-secondary);
+        }
+
+        /* 正文 */
+        .text-body {
+            font-family: var(--font-text);
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--apple-text-secondary);
+        }
+
+        /* 标签/小字 */
+        .text-caption {
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--apple-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* 数据大数字 */
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--apple-text-primary);
+        }
+
+        .metric-unit {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--apple-text-tertiary);
+            margin-left: 4px;
+        }
+
+        /* ========== 布局组件 ========== */
+
+        /* Bento 网格容器 */
+        .bento-grid {
+            display: grid;
+            gap: var(--space-3);
+            height: calc(100% - 120px);
+        }
+
+        .bento-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .bento-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .bento-grid-2-1 {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .bento-grid-1-2 {
+            grid-template-columns: 1fr 2fr;
+        }
+
+        /* Bento 卡片 */
+        .bento-card {
+            background: var(--apple-bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .bento-card-flat {
+            background: transparent;
+            padding: var(--space-4);
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            flex: 1;
+            min-height: 280px;
+        }
+
+        /* ========== 特殊组件 ========== */
+
+        /* 指标卡片 */
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: var(--space-1);
+        }
+
+        .metric-card-centered {
+            align-items: center;
+            text-align: center;
+        }
+
+        /* 洞察高亮 */
+        .insight-highlight {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.08) 0%, rgba(0, 113, 227, 0.02) 100%);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+        }
+
+        .insight-highlight::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 100%;
+            background: var(--apple-blue);
+            border-radius: 2px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .insight-highlight {
+            position: relative;
+            padding-left: var(--space-4);
+        }
+
+        /* 列表项 */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-2);
+            padding: var(--space-2) 0;
+        }
+
+        .list-bullet {
+            width: 6px;
+            height: 6px;
+            background: var(--apple-blue);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        /* 优先级标签 */
+        .priority-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 20px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .priority-p0 {
+            background: var(--apple-blue);
+            color: white;
+        }
+
+        .priority-p1 {
+            background: rgba(0, 113, 227, 0.2);
+            color: var(--apple-blue);
+        }
+
+        .priority-p2 {
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--apple-text-secondary);
+        }
+
+        /* 表格 */
+        .apple-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .apple-table th {
+            font-family: var(--font-text);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--apple-text-tertiary);
+            text-align: left;
+            padding: var(--space-2) var(--space-3);
+            border-bottom: 1px solid var(--apple-divider);
+        }
+
+        .apple-table td {
+            font-family: var(--font-text);
+            font-size: 15px;
+            color: var(--apple-text-primary);
+            padding: var(--space-2) var(--space-3);
+            border-bottom: 1px solid var(--apple-divider);
+        }
+
+        .apple-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .apple-table .text-right {
+            text-align: right;
+        }
+
+        /* 元信息 */
+        .meta-info {
+            display: flex;
+            gap: var(--space-5);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* 分隔线 */
+        .divider {
+            height: 1px;
+            background: var(--apple-divider);
+            margin: var(--space-4) 0;
+        }
+
+        /* 封面页特殊样式 */
+        .cover-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .cover-meta {
+            margin-top: var(--space-8);
+        }
+
+        /* 页面署名 */
+        .page-signature {
+            position: absolute;
+            bottom: var(--space-3);
+            left: var(--space-10);
+            font-family: var(--font-text);
+            font-size: 11px;
+            color: var(--apple-text-tertiary);
+            opacity: 0.6;
+        }
+
+        /* 营销结尾页 */
+        .promo-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .promo-qrcode {
+            width: 200px;
+            height: 200px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: var(--space-4);
+        }
+
+        .promo-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--apple-text-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .promo-desc {
+            font-size: 17px;
+            color: var(--apple-text-secondary);
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        .promo-handle {
+            display: inline-block;
+            margin-top: var(--space-3);
+            padding: var(--space-1) var(--space-2);
+            background: rgba(0, 113, 227, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--apple-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ========== 封面页 ========== -->
+            <section>
+                <div class="cover-slide">
+                    <p class="text-caption" style="margin-bottom: var(--space-2);">数据分析报告</p>
+                    <h1 class="title-hero">{报告标题}</h1>
+
+                    <div class="cover-meta">
+                        <div class="meta-info">
+                            <div class="meta-item">
+                                <span class="text-caption">分析周期</span>
+                                <span class="text-body">{开始时间} — {结束时间}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="text-caption">生成时间</span>
+                                <span class="text-body">{生成时间}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="text-caption">数据来源</span>
+                                <span class="text-body">{数据源}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-signature">generated by @data-insight-agent · made by @郭美青聊AI</div>
+            </section>
+
+            <!-- ========== 内容页模板：左图表 + 右指标/洞察 ========== -->
+            <section>
+                <h2 class="title-page">{观点标题}</h2>
+
+                <div class="bento-grid bento-grid-2-1">
+                    <!-- 图表区 -->
+                    <div class="bento-card">
+                        <div class="chart-container" id="chart1"></div>
+                    </div>
+
+                    <!-- 右侧信息区 -->
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <!-- 关键指标 -->
+                        <div class="bento-card metric-card">
+                            <span class="text-caption">{指标名称}</span>
+                            <div>
+                                <span class="metric-value" id="metric1">--</span>
+                                <span class="metric-unit">{单位}</span>
+                            </div>
+                        </div>
+
+                        <!-- 洞察 -->
+                        <div class="bento-card" style="flex: 1;">
+                            <span class="text-caption" style="margin-bottom: var(--space-2);">关键洞察</span>
+                            <p class="text-body">{洞察内容描述}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-signature">generated by @data-insight-agent · made by @郭美青聊AI</div>
+            </section>
+
+            <!-- ========== 双图表对比页模板 ========== -->
+            <section>
+                <h2 class="title-page">{对比分析标题}</h2>
+
+                <div class="bento-grid bento-grid-2">
+                    <!-- 图表1 -->
+                    <div class="bento-card">
+                        <span class="text-caption" style="margin-bottom: var(--space-2);">{图表1标题}</span>
+                        <div class="chart-container" id="chart2"></div>
+                    </div>
+
+                    <!-- 图表2 -->
+                    <div class="bento-card">
+                        <span class="text-caption" style="margin-bottom: var(--space-2);">{图表2标题}</span>
+                        <div class="chart-container" id="chart3"></div>
+                    </div>
+                </div>
+
+                <!-- 底部洞察 -->
+                <div class="insight-highlight" style="margin-top: var(--space-3);">
+                    <p class="text-body" style="margin: 0;">{对比分析结论}</p>
+                </div>
+                <div class="page-signature">generated by @data-insight-agent · made by @郭美青聊AI</div>
+            </section>
+
+            <!-- ========== 数据表格页模板 ========== -->
+            <section>
+                <h2 class="title-page">{表格标题}</h2>
+
+                <div class="bento-card" style="height: calc(100% - 120px); overflow: auto;">
+                    <table class="apple-table">
+                        <thead>
+                            <tr>
+                                <th>{列1}</th>
+                                <th class="text-right">{列2}</th>
+                                <th class="text-right">{列3}</th>
+                                <th class="text-right">{列4}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable">
+                            <!-- 数据行由JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-signature">generated by @data-insight-agent · made by @郭美青聊AI</div>
+            </section>
+
+            <!-- ========== 总结页 ========== -->
+            <section>
+                <h2 class="title-page">核心结论与建议</h2>
+
+                <div class="bento-grid bento-grid-2">
+                    <!-- 主要发现 -->
+                    <div class="bento-card">
+                        <h3 class="title-section">主要发现</h3>
+                        <div style="display: flex; flex-direction: column; gap: var(--space-1);">
+                            <div class="list-item">
+                                <span class="list-bullet"></span>
+                                <span class="text-body">{发现1}</span>
+                            </div>
+                            <div class="list-item">
+                                <span class="list-bullet"></span>
+                                <span class="text-body">{发现2}</span>
+                            </div>
+                            <div class="list-item">
+                                <span class="list-bullet"></span>
+                                <span class="text-body">{发现3}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 行动建议 -->
+                    <div class="bento-card">
+                        <h3 class="title-section">行动建议</h3>
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div class="list-item">
+                                <span class="priority-tag priority-p0">P0</span>
+                                <span class="text-body">{建议1}</span>
+                            </div>
+                            <div class="list-item">
+                                <span class="priority-tag priority-p1">P1</span>
+                                <span class="text-body">{建议2}</span>
+                            </div>
+                            <div class="list-item">
+                                <span class="priority-tag priority-p2">P2</span>
+                                <span class="text-body">{建议3}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-signature">generated by @data-insight-agent · made by @郭美青聊AI</div>
+            </section>
+
+            <!-- ========== 营销结尾页 ========== -->
+            <section>
+                <div class="promo-slide">
+                    <img src="./assets/andy_talk_ai_qrcode.jpg" alt="关注公众号" class="promo-qrcode" onerror="this.style.display='none'">
+                    <h2 class="promo-title">感谢阅读</h2>
+                    <p class="promo-desc">扫描二维码关注公众号，获取更多 AI 与数据分析的实战分享</p>
+                    <span class="promo-handle">@郭美青聊AI</span>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.js"></script>
+
+    <script>
+        // ========== Reveal.js 初始化 ==========
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            progress: true,
+            controls: true,
+            controlsTutorial: false,
+            transition: 'fade',
+            transitionSpeed: 'fast',
+            backgroundTransition: 'none',
+            width: 1280,
+            height: 720,
+            margin: 0,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // 禁用 fragment 动画
+            fragments: false
+        });
+
+        // ========== ECharts Apple 风格主题 ==========
+        const appleChartTheme = {
+            color: ['#0071E3', '#34C759', '#FF9500', '#AF52DE', '#FF3B30', '#5AC8FA', '#FFCC00'],
+            backgroundColor: 'transparent',
+            textStyle: {
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif',
+                color: '#86868B'
+            },
+            title: {
+                textStyle: {
+                    color: '#1D1D1F',
+                    fontWeight: 600
+                }
+            },
+            legend: {
+                textStyle: {
+                    color: '#86868B',
+                    fontSize: 12
+                },
+                itemGap: 24,
+                icon: 'circle',
+                itemWidth: 8,
+                itemHeight: 8
+            },
+            categoryAxis: {
+                axisLine: { show: false },
+                axisTick: { show: false },
+                axisLabel: {
+                    color: '#86868B',
+                    fontSize: 12
+                },
+                splitLine: { show: false }
+            },
+            valueAxis: {
+                axisLine: { show: false },
+                axisTick: { show: false },
+                axisLabel: {
+                    color: '#AEAEB2',
+                    fontSize: 11
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: 'rgba(0, 0, 0, 0.06)',
+                        type: 'dashed'
+                    }
+                }
+            }
+        };
+
+        echarts.registerTheme('apple', appleChartTheme);
+
+        // ========== 数据加载 ==========
+        async function loadChartData() {
+            try {
+                const response = await fetch('./processed_data/charts_data.json');
+                if (!response.ok) throw new Error('数据文件加载失败');
+                return await response.json();
+            } catch (error) {
+                console.warn('数据加载:', error.message);
+                return null;
+            }
+        }
+
+        // ========== 图表渲染函数 ==========
+
+        // 柱状图 - Apple 风格
+        function renderBarChart(containerId, data, options = {}) {
+            const chart = echarts.init(document.getElementById(containerId), 'apple');
+            chart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                    borderColor: 'rgba(0, 0, 0, 0.08)',
+                    borderWidth: 1,
+                    textStyle: { color: '#1D1D1F', fontSize: 13 },
+                    extraCssText: 'box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 12px;'
+                },
+                grid: { left: 48, right: 24, top: 24, bottom: 48, containLabel: false },
+                xAxis: {
+                    type: 'category',
+                    data: data.map(d => d.label),
+                    axisLabel: { rotate: options.rotate || 0 }
+                },
+                yAxis: { type: 'value' },
+                series: [{
+                    type: 'bar',
+                    data: data.map(d => d.value),
+                    barWidth: '60%',
+                    itemStyle: {
+                        borderRadius: [6, 6, 0, 0],
+                        color: '#0071E3'
+                    },
+                    emphasis: {
+                        itemStyle: { color: '#0077ED' }
+                    }
+                }]
+            });
+            return chart;
+        }
+
+        // 折线图 - Apple 风格
+        function renderLineChart(containerId, data, options = {}) {
+            const chart = echarts.init(document.getElementById(containerId), 'apple');
+            chart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                    borderColor: 'rgba(0, 0, 0, 0.08)',
+                    borderWidth: 1,
+                    textStyle: { color: '#1D1D1F', fontSize: 13 },
+                    extraCssText: 'box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 12px;'
+                },
+                grid: { left: 48, right: 24, top: 24, bottom: 48, containLabel: false },
+                xAxis: {
+                    type: 'category',
+                    data: data.map(d => d.label),
+                    boundaryGap: false
+                },
+                yAxis: { type: 'value' },
+                series: [{
+                    type: 'line',
+                    data: data.map(d => d.value),
+                    smooth: 0.3,
+                    symbol: 'circle',
+                    symbolSize: 6,
+                    lineStyle: { width: 2.5, color: '#0071E3' },
+                    itemStyle: { color: '#0071E3', borderWidth: 2, borderColor: '#fff' },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(0, 113, 227, 0.16)' },
+                            { offset: 1, color: 'rgba(0, 113, 227, 0)' }
+                        ])
+                    }
+                }]
+            });
+            return chart;
+        }
+
+        // 饼图 - Apple 风格
+        function renderPieChart(containerId, data, options = {}) {
+            const chart = echarts.init(document.getElementById(containerId), 'apple');
+            chart.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}<br/>{c} ({d}%)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                    borderColor: 'rgba(0, 0, 0, 0.08)',
+                    borderWidth: 1,
+                    textStyle: { color: '#1D1D1F', fontSize: 13 },
+                    extraCssText: 'box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 12px;'
+                },
+                series: [{
+                    type: 'pie',
+                    radius: options.donut ? ['48%', '72%'] : '72%',
+                    center: ['50%', '50%'],
+                    data: data.map(d => ({ name: d.label, value: d.value })),
+                    label: {
+                        color: '#86868B',
+                        fontSize: 12,
+                        formatter: '{b}\n{d}%'
+                    },
+                    labelLine: {
+                        lineStyle: { color: '#AEAEB2' }
+                    },
+                    itemStyle: {
+                        borderRadius: 4,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    emphasis: {
+                        scale: true,
+                        scaleSize: 4
+                    }
+                }]
+            });
+            return chart;
+        }
+
+        // ========== 响应式处理 ==========
+        const charts = [];
+
+        window.addEventListener('resize', () => {
+            charts.forEach(chart => chart.resize());
+        });
+
+        Reveal.on('slidechanged', () => {
+            setTimeout(() => charts.forEach(chart => chart.resize()), 50);
+        });
+
+        // ========== 初始化 ==========
+        async function init() {
+            const data = await loadChartData();
+
+            if (data) {
+                // 根据数据渲染图表
+                // 示例：
+                // if (data.chart1) charts.push(renderBarChart('chart1', data.chart1));
+                // if (data.chart2) charts.push(renderPieChart('chart2', data.chart2, { donut: true }));
+                // if (data.chart3) charts.push(renderLineChart('chart3', data.chart3));
+
+                // 更新指标数值
+                // if (data.metrics) {
+                //     document.getElementById('metric1').textContent = data.metrics.value1;
+                // }
+
+                console.log('图表数据已加载:', data);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

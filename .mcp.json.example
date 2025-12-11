@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "node",
+      "args": [
+        "./mcp/mcp-mysql-server/build/index.js"
+      ],
+      "env": {
+        "MYSQL_HOST": "your-mysql-host",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "your-readonly-user",
+        "MYSQL_PASSWORD": "your-password",
+        "MYSQL_DATABASE": "your-database"
+      }
+    },
+    "alibaba_cloud_lindorm": {
+      "command": "uv",
+      "args": [
+         "run",
+        "--directory",
+        "./mcp/alibabacloud-lindorm-mcp-server",
+        "python",
+        "-m",
+        "src.lindorm_mcp_server.server"
+      ],
+      "env": {
+        "LINDORM_INSTANCE_ID": "your-lindorm-instance-id",
+        "USING_VPC_NETWORK": "false",
+        "LINDORM_TABLE_HOST": "your-lindorm-host.lindorm.rds.aliyuncs.com",
+        "USERNAME": "your-username",
+        "PASSWORD": "your-password",
+        "TEXT_EMBEDDING_MODEL": "none",
+        "TABLE_DATABASE": "default"
+      }
+    }
+  }
+}

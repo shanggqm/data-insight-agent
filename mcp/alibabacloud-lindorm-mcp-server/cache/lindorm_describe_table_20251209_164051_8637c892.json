@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_describe_table",
+  "params": {
+    "table_name": "message"
+  },
+  "result": "TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME,TYPE,IS_PRIMARY_KEY,SORT_ORDER,IS_AUTO_INCREMENT,IS_LOCAL_UNIQUE\ndefault,message,id,VARCHAR,true,ASC,false,false\ndefault,message,fe_msg_id,VARCHAR,false,none,false,false\ndefault,message,pid,VARCHAR,false,none,false,false\ndefault,message,uid,VARCHAR,false,none,false,false\ndefault,message,sid,VARCHAR,false,none,false,false\ndefault,message,roleid,INT,false,none,false,false\ndefault,message,step,VARCHAR,false,none,false,false\ndefault,message,safety_category,VARCHAR,false,none,false,false\ndefault,message,finish_reason,VARCHAR,false,none,false,false\ndefault,message,status,INT,false,none,false,false\ndefault,message,audit_status,INT,false,none,false,false\ndefault,message,risk_type,VARCHAR,false,none,false,false\ndefault,message,stream_idx,INT,false,none,false,false\ndefault,message,created_at,VARCHAR,false,none,false,false\ndefault,message,updated_at,VARCHAR,false,none,false,false\ndefault,message,session_no,BIGINT,false,none,false,false",
+  "cached_at": "2025-12-09T16:40:51.793290"
+}

@@ -1,0 +1,6 @@
+{
+  "tool_name": "lindorm_show_tables",
+  "params": {},
+  "result": "Tables_in_default\nattachment\nattachment_test\ndaily_active_users\nfeedback\nfeedback_test\nknowledge_base_document_detail\nknowledge_base_user_document_favorite\nmessage\nmessage_test\nreport\nreport_test\nsession\nsession_test\nshare\nshare_test\nuser_favorite_folder",
+  "cached_at": "2025-12-03T10:44:43.733672"
+}

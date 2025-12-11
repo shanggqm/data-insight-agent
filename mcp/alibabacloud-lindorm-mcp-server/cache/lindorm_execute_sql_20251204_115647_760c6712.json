@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT * FROM share WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH) ORDER BY created_at DESC LIMIT 1000"
+  },
+  "result": "The results of executing sql SELECT * FROM share WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH) ORDER BY created_at DESC LIMIT 1000 is\nError executing query: 8012 (42000): Illegal operation: Invalid data format, please check if the data format is correct. \nCaused by: java.lang.NumberFormatException: For input string: \"11 14:35:52.255\"\n\tat java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)\n\tat java.lang.Integer.parseInt(Integer.java:580)\n\tat java.lang.Integer.parseInt(Integer.java:615)\n\tat org.apache.calcite.avatica.util.DateTimeUtils.dateStringToUnixDate(DateTimeUtils.java:651)\n\tat Baz$1$1.moveNext(Unknown Source)\n\tat org.apache.calcite.linq4j.EnumerableDefaults.toLookup_(EnumerableDefaults.java:3610)\n\tat org.apache.calcite.linq4j.EnumerableDefaults$14.enumerator(EnumerableDefaults.java:2665)\n\tat org.apache.calcite.linq4j.EnumerableDefaults$25.enumerator(EnumerableDefaults.java:3417)\n",
+  "cached_at": "2025-12-04T11:56:47.714465"
+}

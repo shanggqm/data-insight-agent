@@ -1,0 +1,72 @@
+# Lindorm MCP Server
+This repository is an example of how to create a MCP server for Lindorm, a multi-model NoSQL database.
+
+# Usage
+## Configuration on lindorm
+To utilize this MCP server, follow these steps:
+1. Purchase the Lindorm wide-table engine, search-engine, vector-engine, and AI-engine on [Alibaba Cloud](https://common-buy.aliyun.com/?commodityCode=hitsdb_lindormpre_public_cn&regionId=cn-beijing).
+2. Deploy a text-embedding model by following the [official instructions](https://help.aliyun.com/zh/lindorm/user-guide/model-management-1).
+3. Create your index (knowledgebase) and import your data using the deployed embedding model.
+
+## Environment Setup
+1. Clone this repository and navigate to the project directory.
+2. Create your environment file:
+```shell
+cp .env.example .env
+```
+3. Edit the .env file with your specific configuration:
+* LINDORM_INSTANCE_ID: Your Lindorm instance ID
+* USING_VPC_NETWORK: Set to true if running on VPC network, otherwise false 
+* USERNAME: Your Lindorm account username 
+* PASSWORD: Your Lindorm account password 
+* TEXT_EMBEDDING_MODEL: The name of your deployed text-embedding model 
+* TABLE_DATABASE: The database for SQL operations
+Note: This configuration assumes all engines share the same username and password.
+
+## Running the MCP Server
+You should install `uv`.
+Directly start the mcp server. 
+```shell
+cd /path/to/alibabacloud-lindorm-mcp-server/
+
+uv pip install .
+
+uv run python -m src.lindorm_mcp_server.server
+```
+
+## Visual Studio Code
+1. Install the Cline extension.
+2. Create the `.env` file under `/path/to/alibabacloud-lindorm-mcp-server/`
+3. Copy the MCP configuration from .vscode/mcp.json to cline_mcp_settings.json, replacing paths and variables as needed.
+4. Start the MCP server through the Cline extension.
+
+
+# Components
+* `LindormVectorSearchClient`: Performs full-text and vector searches on the search and vector engines.
+* `LindormWideTableClient`: Executes SQL operations on Lindorm wide tables.
+
+# Available Tools
+* `lindorm_retrieve_from_index`: Retrieve from an existing indexes(or knowledgebase) using both full-text search and vector search, and return the aggregated results
+  * Parameters
+    * index_name: the index name, or known as knowledgebase name
+    * query: the query that you want to search in knowledgebase
+    * content_field: the text field that store the content text. You can get it from the index structure by lindorm_get_index_mappings tool
+    * vector_field: the vector field that store the vector index. You can get it from the index structure by lindorm_get_index_mappings tool
+    * top_k: the result number that you want to return
+* `lindorm_get_index_fields`: Get the fields info of the indexes(or knowledgebase), especially get the vector stored field and content stored field.
+  * Parameters:
+    * index_name: the index name, or known as knowledgebase name
+* `lindorm_list_all_index`: List all the indexes(or knowledgebase) you have.
+* `lindorm_execute_sql`: Execute SQL query on Lindorm database.
+  * Parameters
+    * query: The SQL query to execute which start with select
+* `lindorm_show_tables`: Get all tables in the Lindorm database
+* `lindorm_describe_table`: Get tables schema in the Lindorm database
+  * Parameters
+    * table_name: the table name
+
+
+
+
+
+

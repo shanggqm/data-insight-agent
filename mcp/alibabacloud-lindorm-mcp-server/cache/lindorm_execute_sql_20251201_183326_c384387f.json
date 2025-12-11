@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT \n    COUNT(DISTINCT uid) AS active_users,\n    COUNT(*) AS total_messages\nFROM message\nWHERE created_at >= '2025-09-28 00:00:00.000' AND created_at < '2025-10-22 00:00:00.000'"
+  },
+  "result": "The results of executing sql SELECT \n    COUNT(DISTINCT uid) AS active_users,\n    COUNT(*) AS total_messages\nFROM message\nWHERE created_at >= '2025-09-28 00:00:00.000' AND created_at < '2025-10-22 00:00:00.000' is\nactive_users,total_messages\n76553,76553",
+  "cached_at": "2025-12-01T18:33:26.725253"
+}

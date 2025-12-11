@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SHOW TABLES"
+  },
+  "result": "The results of executing sql SHOW TABLES is\nQuery should start with SELECT. Example: SELECT * FROM table ",
+  "cached_at": "2025-12-03T10:44:50.640565"
+}

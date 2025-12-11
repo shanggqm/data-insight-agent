@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_execute_sql",
+  "params": {
+    "query": "SELECT type AS attachment_type, COUNT(*) AS count, COUNT(DISTINCT uid) AS unique_users FROM attachment GROUP BY type"
+  },
+  "result": "The results of executing sql SELECT type AS attachment_type, COUNT(*) AS count, COUNT(DISTINCT uid) AS unique_users FROM attachment GROUP BY type is\nError executing query: 1064 (42000): You have an error in your SQL syntax; Encountered \" \"COUNT\" \"count\"\" at line 1, column 45.",
+  "cached_at": "2025-12-01T19:08:24.649675"
+}

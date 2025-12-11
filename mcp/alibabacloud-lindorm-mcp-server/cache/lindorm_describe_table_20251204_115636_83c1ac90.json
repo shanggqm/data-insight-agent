@@ -1,0 +1,8 @@
+{
+  "tool_name": "lindorm_describe_table",
+  "params": {
+    "table_name": "share"
+  },
+  "result": "TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME,TYPE,IS_PRIMARY_KEY,SORT_ORDER,IS_AUTO_INCREMENT,IS_LOCAL_UNIQUE\ndefault,share,id,VARCHAR,true,ASC,false,false\ndefault,share,user_id,VARCHAR,false,none,false,false\ndefault,share,session_id,VARCHAR,false,none,false,false\ndefault,share,share_id,VARCHAR,false,none,false,false\ndefault,share,msg_id_list,VARCHAR,false,none,false,false\ndefault,share,created_at,VARCHAR,false,none,false,false\ndefault,share,updated_at,VARCHAR,false,none,false,false",
+  "cached_at": "2025-12-04T11:56:36.237136"
+}
