@@ -1,7 +1,7 @@
 # Data Insight Agent
 
 [English](README.md)
-
+<img width="5414" height="668" alt="image" src="https://github.com/user-attachments/assets/1a9ed343-c0f3-437a-ab5b-f5492039795d" />
 **别再和数据较劲，直接获取洞察。**
 
 数据分析师和产品经理每天都在重复同样的流程：写 SQL、导出 Excel、手工聚合、画图表、写报告。即便有了大模型，依然困难重重——计算幻觉、上下文超限、输出不稳定。
