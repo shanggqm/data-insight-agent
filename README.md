@@ -1,6 +1,7 @@
 # Data Insight Agent
 
 [中文文档](README_CN.md)
+<img width="5414" height="668" alt="image" src="https://github.com/user-attachments/assets/1a9ed343-c0f3-437a-ab5b-f5492039795d" />
 
 **Stop wrestling with data, start getting insights.**
 
